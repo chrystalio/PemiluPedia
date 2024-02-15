@@ -53,7 +53,7 @@
 
 <script>
     import axios from 'axios';
-    import DapilDropdown from '@/components/DapilDropdown.vue';
+    import DapilDropdown from '@/components/DPR-RI/DapilDropdown.vue'
 
     export default {
         components: {
