@@ -2,7 +2,7 @@
     <div>
         <div class="p-5 text-center text-white" id="jumbotron">
             <div class="container">
-                <div class="row my-3 py-2 d-flex justify-content-between">
+                <div class="row my-2 d-flex justify-content-between">
                     <div class="col-md-6">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/KPU_Logo.svg" alt="KPU Logo" width="80">
                     </div>
