@@ -18,7 +18,8 @@
         <div class="container my-5">
             <div v-if="selectedDapilData">
                 <div class="row">
-                    <div v-for="(candidate, index) in selectedDapilData" :key="index" class="col-lg-4 col-md-5 col-12 mx-md-3 mx-lg-0">
+                    <div v-for="(candidate, index) in selectedDapilData" :key="index"
+                        class="col-lg-4 col-md-5 col-12 mx-md-3 mx-lg-0">
                         <div class="card mb-3 rounded" style="max-width: 500px;">
                             <div class="row g-0">
                                 <div class="col-md-4">
@@ -28,17 +29,17 @@
                                     <div class="card-body">
                                         <h6 id="nama">{{ candidate['nomorUrut'] }}. {{ candidate['nama'] }}</h6>
                                         <p>
-                                            <span id="nama-dapil">
-                                                {{ candidate['namaDapil'] }}
-                                            </span>
-                                            <br>
-                                            <span id="pekerjaan">
-                                                {{ candidate['pekerjaan'] }}
-                                            </span>
-                                            <br>
-                                            <span id="namaPartai">
-                                                {{  candidate['namaPartai'] }}
-                                            </span>
+                                            <span class="candidate-info"
+                                                id="nama-dapil">{{ candidate['namaDapil'] }}</span><br>
+                                            <span class="candidate-info"
+                                                id="agama">{{ candidate['agama'] ? candidate['agama'] : '-' }}
+                                            </span><br>
+                                            <span class="candidate-info"
+                                                id="pekerjaan">{{ candidate['pekerjaan'] ? candidate['pekerjaan'] : '-' }}</span><br>
+                                            <span class="candidate-info"
+                                                id="namaPartai">{{ candidate['namaPartai'] ? candidate['namaPartai'] : '-' }}</span><br>
+                                            <span class="candidate-info"
+                                                id="statusDisabilitas">{{ candidate['statusDisabilitas'] ? candidate['statusDisabilitas'] : '-' }}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -116,17 +117,7 @@
         font-size: 14px;
     }
 
-    #nama-dapil {
-        font-family: 'Inter', sans-serif;
-        font-size: 12px;
-    }
-
-    #namaPartai {
-        font-family: 'Inter', sans-serif;
-        font-size: 12px;
-    }
-
-    #pekerjaan {
+    .candidate-info {
         font-family: 'Inter', sans-serif;
         font-size: 12px;
     }
