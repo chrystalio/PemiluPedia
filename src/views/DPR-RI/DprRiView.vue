@@ -16,9 +16,9 @@
             <DapilDropdown :dapilList="dapilList" @dapil-selected="handleDapilSelected" />
         </div>
         <div class="container my-5">
-            <div v-if="selectedDapilData">
+            <div v-if="paginatedCandidates">
                 <div class="row">
-                    <div v-for="(candidate, index) in selectedDapilData" :key="index"
+                    <div v-for="(candidate, index) in paginatedCandidates" :key="index"
                         class="col-lg-4 col-md-5 col-12 mx-md-3 mx-lg-0">
                         <div class="card mb-3 rounded" style="max-width: 500px;">
                             <div class="row g-0">
@@ -49,6 +49,35 @@
                 </div>
             </div>
         </div>
+        <div class="container my-2">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+                        <a class="page-link" href="#" aria-label="Previous" @click="prevPage">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <!-- Display ellipsis if currentPage > 3 -->
+                    <li v-if="currentPage > 3" class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                    <!-- Display fixed number of visible pages -->
+                    <li v-for="pageNumber in visiblePages" :key="pageNumber"
+                        :class="{ 'active': pageNumber === currentPage }">
+                        <a class="page-link" href="#" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
+                    </li>
+                    <!-- Display ellipsis if currentPage < totalPages - 2 -->
+                    <li v-if="currentPage < totalPages - 2" class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                    <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
+                        <a class="page-link" href="#" aria-label="Next" @click="nextPage">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </template>
 
@@ -63,11 +92,37 @@
         data() {
             return {
                 dapilList: [],
-                selectedDapilData: null
+                selectedDapilData: null,
+                currentPage: 1,
+                pageSize: 12, // Number of items per page
+                maxVisiblePages: 5, // Maximum number of visible pages in the pagination
             };
         },
         mounted() {
             this.fetchDapilList();
+        },
+        computed: {
+            totalPages() {
+                if (this.selectedDapilData) {
+                    return Math.ceil(this.selectedDapilData.length / this.pageSize);
+                }
+                return 0;
+            },
+            visiblePages() {
+                const startPage = Math.max(1, this.currentPage - Math.floor(this.maxVisiblePages / 2));
+                const endPage = Math.min(this.totalPages, startPage + this.maxVisiblePages - 1);
+                return Array.from({
+                    length: endPage - startPage + 1
+                }, (_, i) => startPage + i);
+            },
+            paginatedCandidates() {
+                if (this.selectedDapilData) {
+                    const startIndex = (this.currentPage - 1) * this.pageSize;
+                    const endIndex = startIndex + this.pageSize;
+                    return this.selectedDapilData.slice(startIndex, endIndex);
+                }
+                return [];
+            }
         },
         methods: {
             async fetchDapilList() {
@@ -93,6 +148,19 @@
                     console.error('Error fetching dapil data:', error);
                 }
             },
+            prevPage() {
+                if (this.currentPage > 1) {
+                    this.currentPage--;
+                }
+            },
+            nextPage() {
+                if (this.currentPage < this.totalPages) {
+                    this.currentPage++;
+                }
+            },
+            goToPage(pageNumber) {
+                this.currentPage = pageNumber;
+            }
         },
     };
 </script>
