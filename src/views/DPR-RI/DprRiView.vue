@@ -23,7 +23,7 @@
                         <div class="card mb-3 rounded" style="max-width: 500px;">
                             <div class="row g-0">
                                 <div class="col-md-4">
-                                    <img :src="candidate['pasFoto']" class="img-fluid w-full rounded-start" alt="...">
+                                    <img :src="candidate['pasFoto']" class="img-fluid w-full rounded-start" loading="lazy" alt="pasFoto">
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
